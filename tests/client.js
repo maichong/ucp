@@ -6,17 +6,33 @@
 
 'use strict';
 
+process.title = 'utp_client';
+
 const utp = require('../index');
+
+let buffer = new Buffer(1024 * 1024);
+buffer.fill('t');
+
+let count = 256;
 
 utp.connect({
   port: 30000,
-  //host: '192.168.31.11',
-  password: '123456'
+  host: process.env.UCP_HOST,
+  password: '123456',
+  autoClose: false
 }, function (stream) {
   console.log('on connect', stream.id);
   stream.on('data', data => {
-    console.log('on data', data);
+    console.log(stream.remoteAddress + ':' + stream.remotePort, data.toString());
+    //stream.close();
   });
-  stream.write('hello world');
+  function send() {
+    stream.write(buffer);
+    count--;
+    if (count > 0) {
+      setTimeout(send, 5);
+    }
+  }
 
+  send();
 });

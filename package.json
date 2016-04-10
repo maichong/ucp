@@ -25,6 +25,7 @@
   "homepage": "https://github.com/maichong/ucp#readme",
   "peerDependencies": {},
   "devDependencies": {
+    "bytes": "^2.3.0",
     "eslint": "^2.7.0",
     "eslint-config-airbnb": "^6.2.0",
     "eslint-config-react": "^1.1.1",
