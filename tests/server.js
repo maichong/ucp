@@ -15,7 +15,7 @@ const Speed = require('./speed');
 const bytes = require('bytes');
 
 let server = utp.createServer({
-  port: 30000,
+  port: process.env.UCP_PORT || 30000,
   password: '123456'
 }, function (stream) {
   console.log('income steam', stream.id);
@@ -34,7 +34,7 @@ let server = utp.createServer({
     connWrite.set(connection.bytesWritten);
   });
 
-  setInterval(function () {
+  let debugTimer = setInterval(function () {
     console.log('\n%ss', parseInt((Date.now() - start) / 1000));
     console.log('Stream In: %s/s , %s/s . Stream Out: %s/s , %s/s .', streamRead.current(), streamRead.all(), streamWrite.current(), streamWrite.all());
     console.log('Conn.. In: %s/s , %s/s . Conn.. Out: %s/s , %s/s .', connRead.current(), connRead.all(), connWrite.current(), connWrite.all());
@@ -48,6 +48,10 @@ let server = utp.createServer({
     );
     console.log('confirmedMaxSegmentId', stream.confirmedMaxSegmentId, 'receivedMaxSegmentId', stream.receivedMaxSegmentId);
   }, 1000);
+
+  stream.on('close', ()=> {
+    clearInterval(debugTimer);
+  });
 });
 
 server.listen();

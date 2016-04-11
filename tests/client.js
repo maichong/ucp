@@ -16,7 +16,7 @@ buffer.fill('t');
 let count = 256;
 
 utp.connect({
-  port: 30000,
+  port: process.env.UCP_PORT || 30000,
   host: process.env.UCP_HOST,
   password: '123456',
   autoClose: false
