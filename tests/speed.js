@@ -29,7 +29,7 @@ class Speed {
     this.total += num;
   }
 
-  current() {
+  current(unit) {
     let now = Date.now();
     let total = 0;
     for (let t in this.slices) {
@@ -39,11 +39,12 @@ class Speed {
       }
       total += this.slices[t];
     }
-    return bytes(total / 2);
+    return unit === false ? total / 2 : bytes(total / 2);
   }
 
-  all() {
-    return bytes(this.total / (Date.now() - this.start) * 1000);
+  all(unit) {
+    let value = this.total / (Date.now() - this.start) * 1000;
+    return unit === false ? value : bytes(value);
   }
 }
 
