@@ -41,6 +41,10 @@ ucp.connect = function (options, connectListener) {
       connection.close();
       throw error;
     });
+
+    connection.on('close', () => {
+      delete connections[addr];
+    });
   }
 
   function onConnected() {
