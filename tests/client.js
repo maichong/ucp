@@ -12,6 +12,8 @@ const utp = require('../index');
 
 const Speed = require('./speed');
 
+const bytes = require('bytes');
+
 let buffer = new Buffer(1024 * 1024);
 buffer.fill('t');
 
