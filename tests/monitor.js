@@ -68,7 +68,8 @@ module.exports = function monitor(stream) {
     data.push([
       'SRTT', parseInt(connection.srtt),
       'RTO', parseInt(connection.rto),
-      'Alive', Date.now() - connection.lastAlive,
+      //'Alive', Date.now() - connection.lastAlive,
+      'Write Queue', stream._writeQueue.length,
       'SRTT', parseInt(stream.srtt)
     ]);
     data.push([
