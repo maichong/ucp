@@ -18,6 +18,7 @@ let server = utp.createServer({
 }, function (stream) {
   console.log('income steam', stream.id);
   monitor(stream);
+  stream.on('data', data => stream.write(data));
 });
 
 server.listen();
