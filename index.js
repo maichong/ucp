@@ -8,6 +8,7 @@
 
 const Connection = require('./lib/connection');
 const Server = require('./lib/server');
+const Encryption = require('./lib/encryption');
 
 const ucp = exports;
 ucp.Server = Server;
@@ -35,6 +36,8 @@ ucp.connect = function (options, connectListener) {
   let connection = connections[addr];
 
   if (!connection) {
+    let encryption = new Encryption(options.secret);
+    options.encryption = encryption;
     connection = connections[addr] = new Connection(options);
     connection.connect();
     connection.on('error', (error) => {
