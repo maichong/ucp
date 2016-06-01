@@ -26,7 +26,7 @@ let count = COUNT;
 let stream = ucp.connect({
   port: process.env.UCP_PORT || 30000,
   host: process.env.UCP_HOST || '127.0.0.1',
-  password: '123456',
+  secret: '123456',
   autoClose: false
 }, function () {
   console.log('on connect', stream.id);

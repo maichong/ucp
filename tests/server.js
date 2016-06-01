@@ -14,7 +14,7 @@ const monitor = require('./monitor');
 
 let server = ucp.createServer({
   port: process.env.UCP_PORT || 30000,
-  password: '123456'
+  secret: '123456'
 }, function (stream) {
   console.log('income steam', stream.id);
   monitor(stream);

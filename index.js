@@ -26,8 +26,8 @@ ucp.connect = function (options, connectListener) {
   if (!options.port) {
     throw new Error('server port is required');
   }
-  if (!options.password) {
-    throw new Error('server password is required');
+  if (!options.secret) {
+    throw new Error('server secret is required');
   }
   options.host = options.host || 'localhost';
   let addr = options.host + ':' + options.port;
@@ -35,11 +35,11 @@ ucp.connect = function (options, connectListener) {
   let connection = connections[addr];
 
   if (!connection) {
-    connection = new Connection(options);
+    connection = connections[addr] = new Connection(options);
     connection.connect();
     connection.on('error', (error) => {
+      console.log(error);
       connection.close();
-      throw error;
     });
 
     connection.on('close', () => {
@@ -47,10 +47,12 @@ ucp.connect = function (options, connectListener) {
     });
   }
 
-  if (connection.connected) {
-    setImmediate(connectListener);
-  } else {
-    connection.on('connect', connectListener);
+  if (connectListener) {
+    if (connection.connected) {
+      setImmediate(connectListener);
+    } else {
+      connection.on('connect', connectListener);
+    }
   }
   return connection.createStream();
 };
