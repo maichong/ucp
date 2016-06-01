@@ -6,9 +6,9 @@
 
 'use strict';
 
-process.title = 'utp_client';
+process.title = 'ucp_client';
 
-const utp = require('../index');
+const ucp = require('../index');
 
 const monitor = require('./monitor');
 
@@ -23,12 +23,12 @@ let COUNT = 200;
 
 let count = COUNT;
 
-utp.connect({
+let stream = ucp.connect({
   port: process.env.UCP_PORT || 30000,
-  host: process.env.UCP_HOST,
+  host: process.env.UCP_HOST || '127.0.0.1',
   password: '123456',
   autoClose: false
-}, function (stream) {
+}, function () {
   console.log('on connect', stream.id);
   monitor(stream);
   function send() {

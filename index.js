@@ -47,15 +47,11 @@ ucp.connect = function (options, connectListener) {
     });
   }
 
-  function onConnected() {
-    let stream = connection.createStream();
-    connectListener(stream);
-  }
-
   if (connection.connected) {
-    onConnected();
+    setImmediate(connectListener);
   } else {
-    connection.on('connect', onConnected);
+    connection.on('connect', connectListener);
   }
+  return connection.createStream();
 };
 

@@ -6,13 +6,13 @@
 
 'use strict';
 
-process.title = 'utp_server';
+process.title = 'ucp_server';
 
-const utp = require('../index');
+const ucp = require('../index');
 
 const monitor = require('./monitor');
 
-let server = utp.createServer({
+let server = ucp.createServer({
   port: process.env.UCP_PORT || 30000,
   password: '123456'
 }, function (stream) {
